@@ -1,0 +1,6 @@
+VIM enhancement package by Tobias Schlitt <toby@php.net>.
+Including
+- A general purpose .vimrc
+- An extremly PHP specific file type plugin .vim/ftdetect/php.vim
+- The PDV (phpDocumentor for VIM) documentation plugin .vim/php-doc.vim
+See these files for more documentation!

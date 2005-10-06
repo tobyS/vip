@@ -49,6 +49,10 @@
 "  * Created the initial version of this script while playing around with VIM
 "  scripting the first time and trying to fix Vidyut's solution, which
 "  resulted in a complete rewrite.
+"
+" Version 1.1.0
+" -------------
+"  * Fixed bug with call-by-reference parameters. 
 " 
 
 if has ("user_commands")
@@ -60,27 +64,41 @@ let g:pdv_cfg_CommentHead = "/**"
 let g:pdv_cfg_Comment1 = " * "
 let g:pdv_cfg_Commentn = " * "
 let g:pdv_cfg_CommentTail = " */"
+let g:pdv_cfg_CommentSingle = "//"
 
 " Default values
 let g:pdv_cfg_Type = "mixed"
-let g:pdv_cfg_Package = ""
-let g:pdv_cfg_Version = "$id$"
-let g:pdv_cfg_Author = "Tobias Schlitt <toby@php.net>"
-let g:pdv_cfg_Copyright = "1997-2005 The PHP Group"
-let g:pdv_cfg_License = "PHP Version 3.0 {@link http://www.php.net/license/3_0.txt}"
+let g:pdv_cfg_Package = "ConsoleTools"
+let g:pdv_cfg_Version = "//autogen//"
+let g:pdv_cfg_Author = ""
+let g:pdv_cfg_Copyright = "Copyright (C) 2005 eZ systems as. All rights reserved."
+let g:pdv_cfg_License = "LGPL {@link http://www.gnu.org/copyleft/lesser.html}"
+
+" TOB: let g:pdv_cfg_Type = "mixed"
+" TOB: let g:pdv_cfg_Package = ""
+" TOB: let g:pdv_cfg_Version = "$id$"
+" TOB: let g:pdv_cfg_Author = "Tobias Schlitt <toby@php.net>"
+" TOB: let g:pdv_cfg_Copyright = "1997-2005 The PHP Group"
+" TOB: let g:pdv_cfg_License = "PHP Version 3.0 {@link http://www.php.net/license/3_0.txt}"
 
 let g:pdv_cfg_ReturnVal = "void"
+
 " Wether to create @uses tags for implementation of interfaces and inheritance
-let g:pdv_cfg_Uses = 1
+let g:pdv_cfg_Uses = 0
+" TOB: let g:pdv_cfg_Uses = 1
 
 " Options
 " :set paste before documenting (1|0)? Recommended.
 let g:pdv_cfg_paste = 1
+
 " Wether for PHP5 code PHP4 tags should be set, like @access,... (1|0)?
-let g:pdv_cfg_php4always = 1
+let g:pdv_cfg_php4always = 0
+" TOB: let g:pdv_cfg_php4always = 1
+ 
 " Wether to guess scopes after PEAR coding standards:
 " $_foo/_bar() == <private|protected> (1|0)?
 let g:pdv_cfg_php4guess = 1
+
 " If you selected 1 for the last value, this scope identifier will be used for
 " the identifiers having an _ in the first place.
 let g:pdv_cfg_php4guessval = "protected"
@@ -101,21 +119,23 @@ let g:pdv_re_abstract = '\(abstract\)'
 let g:pdv_re_final = '\(final\)'
 
 " [:space:]*(private|protected|public|static|abstract)*[:space:]+[:identifier:]+\([:params:]\)
-let g:pdv_re_func = '^[ ]*\([a-zA-Z ]\+\)function[ ]\+\([^ (]\+\)[ ]*([ ]*\(.*\)[ ]*)[ ]*[{;]\?$'
+let g:pdv_re_func = '^\s*\([a-zA-Z ]*\)function\s\+\([^ (]\+\)\s*(\s*\(.*\)\s*)\s*[{;]\?$'
 " [:typehint:]*[:space:]*$[:identifier]\([:space:]*=[:space:]*[:value:]\)?
-let g:pdv_re_param = ' *\([^ ]*\) *&\?\$\([A-Za-z_][A-Za-z0-9_]*\) *=\? *\(.*\)\?$'
+let g:pdv_re_param = ' *\([^ &]*\) *&\?\$\([A-Za-z_][A-Za-z0-9_]*\) *=\? *\(.*\)\?$'
 
 " [:space:]*(private|protected|public\)[:space:]*$[:identifier:]+\([:space:]*=[:space:]*[:value:]+\)*;
-let g:pdv_re_attribute = '^ *\(\(private\|public\|protected\|var\|static\|\s\)\+\) *\$\([^ ;=]\+\)[ =]*\(.*\);\?$'
+let g:pdv_re_attribute = '^\s*\(\(private\|public\|protected\|var\|static\)\+\)\s*\$\([^ ;=]\+\)[ =]*\(.*\);\?$'
 
 " [:spacce:]*(abstract|final|)[:space:]*(class|interface)+[:space:]+\(extends ([:identifier:])\)?[:space:]*\(implements ([:identifier:][, ]*)+\)?
-let g:pdv_re_class = '^ *\([a-zA-Z]*\) *\(interface\|class\) *\([^ ]\+\) *\(extends\)\? *\([a-zA-Z0-9]*\)\? *\(implements*\)\? *\([a-zA-Z0-9_ ,]*\)\?.*$'
+let g:pdv_re_class = '^\s*\([a-zA-Z]*\)\s*\(interface\|class\)\s*\([^ ]\+\)\s*\(extends\)\?\s*\([a-zA-Z0-9]*\)\?\s*\(implements*\)\? *\([a-zA-Z0-9_ ,]*\)\?.*$'
 
 let g:pdv_re_array  = "^array *(.*"
 let g:pdv_re_float  = '^[0-9.]\+'
 let g:pdv_re_int    = '^[0-9]\+$'
 let g:pdv_re_string = "['\"].*"
 let g:pdv_re_bool = "\(true\|false\)"
+
+let g:pdv_re_indent = '^\s*'
 
 " Shortcuts for editing the text:
 let g:pdv_cfg_BOL = "norm! o"
@@ -140,18 +160,53 @@ endfunc
 func! PhpDocRange() range
     let l:line = a:firstline
     let l:endLine = a:lastline
+	let l:elementName = ""
     while l:line <= l:endLine
         " TODO: Replace regex check for existing doc with check more lines
         " above...
         if (getline(l:line) =~ g:pdv_re_func || getline(l:line) =~ g:pdv_re_attribute || getline(l:line) =~ g:pdv_re_class) && getline(l:line - 1) !~ g:pdv_re_comment
+			let l:docLines = 0
+			" Ensure we are on the correct line to run PhpDoc()
             exe "norm! " . l:line . "G$"
-            let l:ending = PhpDoc()
+			" No matter what, this returns the element name
+            let l:elementName = PhpDoc()
             let l:endLine = l:endLine + (line(".") - l:line) + 1
             let l:line = line(".") + 1 
         endif
         let l:line = l:line + 1
     endwhile
 endfunc
+
+ " }}}
+" {{{ PhpDocFold()
+
+" func! PhpDocFold(name)
+" 	let l:startline = line(".")
+" 	let l:currentLine = l:startLine
+" 	let l:commentHead = escape(g:pdv_cfg_CommentHead, "*.");
+"     let l:txtBOL = g:pdv_cfg_BOL . matchstr(l:name, '^\s*')
+" 	" Search above for comment start
+" 	while (l:currentLine > 1)
+" 		if (matchstr(l:commentHead, getline(l:currentLine)))
+" 			break;
+" 		endif
+" 		let l:currentLine = l:currentLine + 1
+" 	endwhile
+" 	" Goto 1 line above and open a newline
+"     exe "norm! " . (l:currentLine - 1) . "Go\<ESC>"
+" 	" Write the fold comment
+"     exe l:txtBOL . g:pdv_cfg_CommentSingle . " {"."{{ " . a:name . g:pdv_cfg_EOL
+" 	" Add another newline below that
+" 	exe "norm! o\<ESC>"
+" 	" Search for our comment line
+" 	let l:currentLine = line(".")
+" 	while (l:currentLine <= line("$"))
+" 		" HERE!!!!
+" 	endwhile
+" 	
+" 
+" endfunc
+
 
 " }}}
 
@@ -179,6 +234,10 @@ func! PhpDoc()
 
     endif
 
+"	if g:pdv_cfg_folds == 1
+"		PhpDocFolds(l:result)
+"	endif
+
     let &g:paste = l:paste
 
     return l:result
@@ -197,11 +256,12 @@ func! PhpDocFunc()
 
 	" First some things to make it more easy for us:
 	" tab -> space && space+ -> space
-	let l:name = substitute (l:name, '\t', ' ', "")
+	" let l:name = substitute (l:name, '\t', ' ', "")
+	" Orphan. We're now using \s everywhere...
 
 	" Now we have to split DECL in three parts:
 	" \[(skopemodifier\)]\(funcname\)\(parameters\)
-    let l:indent = matchstr(l:name, '^\ *')
+    let l:indent = matchstr(l:name, g:pdv_re_indent)
 	
 	let l:modifier = substitute (l:name, g:pdv_re_func, '\1', "g")
 	let l:funcname = substitute (l:name, g:pdv_re_func, '\2', "g")
@@ -214,7 +274,7 @@ func! PhpDocFunc()
     exe "norm! " . commentline . "G$"
     
     " Local indent
-    let l:txtBOL = g:pdv_cfg_BOL . indent
+    let l:txtBOL = g:pdv_cfg_BOL . l:indent
 	
     exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
 	exe l:txtBOL . g:pdv_cfg_Comment1 . funcname . " " . g:pdv_cfg_EOL
@@ -258,11 +318,11 @@ func! PhpDocFunc()
 
 	" Close the comment block.
 	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
-    return line(".")
+    return l:modifier ." ". l:funcname
 endfunc
 
 " }}}  
- " {{{  PhpDocVar()
+ " {{{  PhpDocVar() 
 
 func! PhpDocVar()
 	" Line for the comment to begin
@@ -270,13 +330,12 @@ func! PhpDocVar()
 
 	let l:name = substitute (getline ("."), '^\(.*\)\/\/.*$', '\1', "")
 
-	" First some things to make it more easy for us:
-	" tab -> space && space+ -> space
-	let l:name = substitute (l:name, '\t', ' ', "")
-
 	" Now we have to split DECL in three parts:
 	" \[(skopemodifier\)]\(funcname\)\(parameters\)
-    let l:indent = matchstr(l:name, '^\ *')
+	" let l:name = substitute (l:name, '\t', ' ', "")
+	" Orphan. We're now using \s everywhere...
+
+    let l:indent = matchstr(l:name, g:pdv_re_indent)
 
 	let l:modifier = substitute (l:name, g:pdv_re_attribute, '\1', "g")
 	let l:varname = substitute (l:name, g:pdv_re_attribute, '\3', "g")
@@ -290,7 +349,7 @@ func! PhpDocVar()
     exe "norm! " . commentline . "G$"
     
     " Local indent
-    let l:txtBOL = g:pdv_cfg_BOL . indent
+    let l:txtBOL = g:pdv_cfg_BOL . l:indent
 	
     exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
 	exe l:txtBOL . g:pdv_cfg_Comment1 . l:varname . " " . g:pdv_cfg_EOL
@@ -305,6 +364,7 @@ func! PhpDocVar()
 	
     " Close the comment block.
 	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
+	return l:modifier ." ". l:varname
 endfunc
 
 " }}}
@@ -320,11 +380,12 @@ func! PhpDocClass()
 
 	" First some things to make it more easy for us:
 	" tab -> space && space+ -> space
-	let l:name = substitute (l:name, '\t', ' ', "")
+	" let l:name = substitute (l:name, '\t', ' ', "")
+	" Orphan. We're now using \s everywhere...
 
 	" Now we have to split DECL in three parts:
 	" \[(skopemodifier\)]\(classname\)\(parameters\)
-    let l:indent = matchstr(l:name, '^\ *')
+    let l:indent = matchstr(l:name, g:pdv_re_indent)
 	
 	let l:modifier = substitute (l:name, g:pdv_re_class, '\1', "g")
 	let l:classname = substitute (l:name, g:pdv_re_class, '\3', "g")
@@ -337,7 +398,7 @@ func! PhpDocClass()
     exe "norm! " . commentline . "G$"
     
     " Local indent
-    let l:txtBOL = g:pdv_cfg_BOL . indent
+    let l:txtBOL = g:pdv_cfg_BOL . l:indent
 	
     exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
 	exe l:txtBOL . g:pdv_cfg_Comment1 . l:classname . " " . g:pdv_cfg_EOL
@@ -368,10 +429,11 @@ func! PhpDocClass()
 
 	" Close the comment block.
 	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
+	return l:modifier ." ". l:classname
 endfunc
 
 " }}} 
-" {{{ PhpDocScope()
+" {{{ PhpDocScope() 
 
 func! PhpDocScope(modifiers, identifier)
 " exe g:pdv_cfg_BOL . DEBUG: . a:modifiers . g:pdv_cfg_EOL

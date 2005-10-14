@@ -130,8 +130,9 @@ let g:pdv_re_attribute = '^\s*\(\(private\|public\|protected\|var\|static\)\+\)\
 let g:pdv_re_class = '^\s*\([a-zA-Z]*\)\s*\(interface\|class\)\s*\([^ ]\+\)\s*\(extends\)\?\s*\([a-zA-Z0-9]*\)\?\s*\(implements*\)\? *\([a-zA-Z0-9_ ,]*\)\?.*$'
 
 let g:pdv_re_array  = "^array *(.*"
-let g:pdv_re_float  = '^[0-9.]\+'
-let g:pdv_re_int    = '^[0-9]\+$'
+" FIXME (retest regex!)
+let g:pdv_re_float  = '^[0-9]*\.[0-9]\+'
+let g:pdv_re_int    = '^[0-9]\+'
 let g:pdv_re_string = "['\"].*"
 let g:pdv_re_bool = "\(true\|false\)"
 

@@ -42,6 +42,18 @@
 "  break!)
 "  - Fixed bug with cover char mapping of "" in visual mode
 "  - Added possible alternatives for other coding standards
+"
+"  - Replace grepprg to remove SVN results
+"  - Add mapping for VIM7 spell checks to <F5>
+"  - Added autocommand to highlight the current line in insert mode.
+
+set grepprg=/usr/bin/vimgrep\ $*\ /dev/null
+
+map <F5> :setlocal spell! spelllang=en_us<cr>
+
+" Highlight current line in insert mode.
+autocmd InsertLeave * se nocul
+autocmd InsertEnter * se cul 
 
 " {{{ .phps files handled like .php
 
@@ -49,7 +61,7 @@ au BufRead,BufNewFile *.phps		set filetype=php
 
 " }}}
 
-" {{{  Settings  
+" {{{  Settings   
 
 " Use filetype plugins, e.g. for PHP
 filetype plugin on
@@ -85,5 +97,8 @@ set scrolloff=3
 
 " Repair wired terminal/vim settings
 set backspace=start,eol,indent
+
+" Allow file inline modelines to provide settings
+set modeline
 
 " }}}

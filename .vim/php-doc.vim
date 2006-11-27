@@ -144,8 +144,6 @@ let g:pdv_cfg_EOL = ""
 
 " }}}  
 
-au BufNewFile *.php  | execute "normal :set ai!<\kEnter>i<?php<\kEnter><\kEnter>?><ESC>OA"
-
  " {{{ PhpDocSingle()
  " Document a single line of code ( does not check if doc block already exists )
 

@@ -55,6 +55,8 @@ map <F5> :setlocal spell! spelllang=en_us<cr>
 autocmd InsertLeave * se nocul
 autocmd InsertEnter * se cul 
 
+source ~/.vimlocalrc
+
 " {{{ .phps files handled like .php
 
 au BufRead,BufNewFile *.phps		set filetype=php

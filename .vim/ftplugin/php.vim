@@ -29,6 +29,9 @@ set makeprg=php5\ -l\ %
 " Use errorformat for parsing PHP error output
 set errorformat=%m\ in\ %f\ on\ line\ %l
 
+" Swicth syntax highlighting on, if it was not
+syntax on
+
 " }}} Settings
 
 " {{{ Command mappings
@@ -80,7 +83,8 @@ inoremap ' ''<LEFT>
 :vnoremap { "zdi{<C-R>z}<ESC>
 :vnoremap [ "zdi[<C-R>z]<ESC>
 :vnoremap ' "zdi'<C-R>z'<ESC>
-:vnoremap " "zdi"<C-R>z"<ESC>
+" Removed in favor of register addressing
+" :vnoremap " "zdi"<C-R>z"<ESC>
 
 " }}} Wrap visual selections with chars
 

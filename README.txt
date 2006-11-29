@@ -3,8 +3,8 @@ PDV - phpDocumentor for VIM
 ===========================
 
 :Author:    Tobias Schlitt
-:Revision:  $Rev$
-:Date:      $Date$
+:Revision:  $Rev: 22 $
+:Date:      $Date: 2006-11-29 22:06:50 +0100 (Wed, 29 Nov 2006) $
 :Status:    Beta
 
 

@@ -2,11 +2,18 @@
 PDV - phpDocumentor for VIM
 ===========================
 
+:Author:    Tobias Schlitt
+:Revision:  $Rev$
+:Date:      $Date$
+:Status:    Beta
+
 This repository contains the most recent version of PDV, the phpDocumentor for
 VIM plugin. Beside that, a VIM file type plugin is provided, which configures a
 lot of VIM enhancements for more comfortable PHP editing in VIM.  Additionally,
 I provide some more files here (like my .vimrc and some minor file type
 plugins), which make my daily live with VIM more comfortable and easy.
+
+.. contents::
 
 PDV - The plugin itself
 =======================

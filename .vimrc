@@ -1,5 +1,6 @@
 " .vimrc by Tobias Schlitt <toby@php.net>.
-" No copyright, feel free to use this, as you like.
+" No copyright, feel free to use this, as you like, as long as you keep some
+" credits.
 " 
 " General VIM settings file. Optimized for coding PHP can be found in 
 " ~/vim/ftdetect/php.vim.
@@ -19,7 +20,7 @@
 "  - Added for mapping for wrapping visual selections into chars (like '/(/...)
 "  - Added scrolljump=5 and scrolloff=3 for better moving around with folds
 "  - Added mapping <CTRL>-h to search for the word under the cursor (should be
-"  a funcion) using phpm
+"    a funcion) using phpm
 "  - Replaced map/imap with noremap/inoremap for clearer mappings
 "
 " v1.1pl1:
@@ -39,23 +40,33 @@
 "  - Activated sourcing of ftplugins
 "  - Added file type setting for .phps files
 "  - Created PDV (phpDocumentor for VIM) and added mapping (ATTENTION! BC
-"  break!)
+"    break!)
 "  - Fixed bug with cover char mapping of "" in visual mode
 "  - Added possible alternatives for other coding standards
 "
 "  - Replace grepprg to remove SVN results
 "  - Add mapping for VIM7 spell checks to <F5>
 "  - Added autocommand to highlight the current line in insert mode.
+"  - Added skeleton file to be read for new PHP files.
 
+" Source local settings
+source ~/.vimlocalrc
+
+" Set new grep command, which ignores SVN!
+" TODO: Add this to SVN
 set grepprg=/usr/bin/vimgrep\ $*\ /dev/null
 
+" Map <F5> to turn spelling on (VIM 7.0+)
 map <F5> :setlocal spell! spelllang=en_us<cr>
 
 " Highlight current line in insert mode.
 autocmd InsertLeave * se nocul
 autocmd InsertEnter * se cul 
 
-source ~/.vimlocalrc
+" Reads the skeleton php file
+" Note: The normal command afterwards deletes an ugly pending line and moves
+" the cursor to the middle of the file.
+autocmd BufNewFile *.php 0r ~/.vim/skeleton.php | normal GddOAOA
 
 " {{{ .phps files handled like .php
 

@@ -15,6 +15,14 @@ plugins), which make my daily live with VIM more comfortable and easy.
 
 .. contents::
 
+Obtaining this repository
+=========================
+
+To get the files provided in this repository, you can either download them
+manually through the web interface or do an SVN checkout using: ::
+
+    $ svn co svn://phpugdo.de/PDV
+
 PDV - The plugin itself
 =======================
 

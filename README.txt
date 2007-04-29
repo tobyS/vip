@@ -329,6 +329,12 @@ PHPM
     by hitting <Ctrl>+h on any PHP function name (in insert mode). PHPM will be
     called and the signature of the desired function will be shown in the
     status bar.
+Align arrays / assignements
+    The `PhpAlign()`_ function is mapped to <Ctrl>-a in visual mode. Simple select
+    the lines to assign and hit the shortcut.
+Commenting / uncommenting
+    The `PhpUnComment()`_ function is mapped to <Ctrl>-c in visual mode. Simply
+    select the lines you want to comment/un-comment and hit the shortcut.:
 
 Closing chars
 ~~~~~~~~~~~~~
@@ -414,6 +420,71 @@ Note: VIM will always try to use auto completion if your cursor resides behind a
 character string. In cases where you need a real tab here, simply type a normal
 space first and then hit the <Tab> key!
 
+PhpAlign()
+~~~~~~~~~~
+    
+Often you have written down an array declaration or a set of variable
+assignements. Usually things look somewhat ugly the, like ::
+    
+    $foo = array(
+        "test" => "test",
+        "foo" => "bar",
+        "something" => "somewhat",
+        "anything more" => "and more and more",
+    );
+
+Aligning this definition properly is an ugly, boring work. The PhpAlign()
+function takes it from you and aligns the array declaration properly: ::
+    
+    $foo = array(
+        "test"          => "test",
+        "foo"           => "bar",
+        "something"     => "somewhat",
+        "anything more" => "and more and more",
+    );
+
+This also works with usual variable assignements: ::
+
+    $foo = "bar";
+    $someVariable = "some value";
+    $aVar = 23;
+
+becomes ::
+
+    $foo          = "bar";
+    $someVariable = "some value";
+    $aVar         = 23;
+
+PhpUnComment()
+~~~~~~~~~~~~~~
+
+Often you want to comment or un-comment a couple of lines, because you
+currently change those and want to make a backup or simply want to bring
+alternative code in place. For multiple reasons you may not want to use
+multi-line commens for this (e.g. because you the closing sequence inside the
+code or because they simply look ugly. PhpUnComment() simply comments a line
+which is not commented and un-comments a line that is commented. ::
+
+    function test()
+    {
+        return "test";
+    }
+    // function test()
+    // {
+        // return 23;
+    // }
+
+Selecting these lines (all of them) and running PhpUnComment() results in: ::
+
+    // function test()
+    // {
+        // return "test";
+    // }
+    function test()
+    {
+        return 23;
+    }
+    
 The .vimrc
 ==========
 

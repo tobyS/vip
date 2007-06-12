@@ -35,7 +35,7 @@
 " For example include into your .vimrc:
 " 
 " source ~/.vim/php-doc.vim
-" imap <C-o> :set paste<CR>:exe PhpDoc()<CR>:set nopaste<CR>i
+" imap <C-o> :set paste<CR>:call PhpDoc()<CR>:set nopaste<CR>i
 "
 " This includes the script and maps the combination <ctrl>+o (only in
 " insert mode) to the doc function. 
@@ -68,11 +68,11 @@ let g:pdv_cfg_CommentSingle = "//"
 
 " Default values
 let g:pdv_cfg_Type = "mixed"
-let g:pdv_cfg_Package = "ConsoleTools"
+let g:pdv_cfg_Package = "Framework"
 let g:pdv_cfg_Version = "//autogen//"
 let g:pdv_cfg_Author = ""
-let g:pdv_cfg_Copyright = "Copyright (C) 2005 eZ systems as. All rights reserved."
-let g:pdv_cfg_License = "LGPL {@link http://www.gnu.org/copyleft/lesser.html}"
+let g:pdv_cfg_Copyright = "Copyright (C) 2006 eZ systems as. All rights reserved."
+let g:pdv_cfg_License = "http://ez.no/licenses/new_bsd New BSD License"
 
 " TOB: let g:pdv_cfg_Type = "mixed"
 " TOB: let g:pdv_cfg_Package = ""

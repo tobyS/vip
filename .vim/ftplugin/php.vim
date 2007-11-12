@@ -24,7 +24,7 @@ set nowrap
 set formatoptions=qroct
 
 " Use php syntax check when doing :make
-set makeprg=php5\ -l\ %
+set makeprg=php\ -l\ %
 
 " Use errorformat for parsing PHP error output
 set errorformat=%m\ in\ %f\ on\ line\ %l
@@ -59,7 +59,7 @@ inoremap <C-H> <ESC>:!phpm <C-R>=expand("<cword>")<CR><CR>
 vnoremap <C-a> :call PhpAlign()<CR>
 
 " Map <CTRL>-a to (un-)comment function
-vnoremap <C-a> :call PhpAlign()<CR>
+vnoremap <C-c> :call PhpUnComment()<CR>
 
 " }}}
 

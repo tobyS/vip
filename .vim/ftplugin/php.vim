@@ -153,9 +153,9 @@ func! PhpAlign() range
 			continue
 		endif
         let l:linestart = substitute (getline (l:line), '^\(\s*\).*', '\1', "")
-        let l:linekey   = substitute (getline (l:line), '^\s*\(.\{-\}\)\s*\(\S\{0,1}=\S\{0,1\}\s\)\(.*\)$', '\1', "")
-        let l:linesep   = substitute (getline (l:line), '^\s*\(.\{-\}\)\s*\(\S\{0,1}=\S\{0,1\}\s\)\(.*\)$', '\2', "")
-        let l:linevalue = substitute (getline (l:line), '^\s*\(.\{-\}\)\s*\(\S\{0,1}=\S\{0,1\}\s\)\(.*\)$', '\3', "")
+        let l:linekey   = substitute (getline (l:line), '^\s*\(.\{-\}\)\s*\(\S\{0,1}=\S\{0,1\}\)\s\(.*\)$', '\1', "")
+        let l:linesep   = substitute (getline (l:line), '^\s*\(.\{-\}\)\s*\(\S\{0,1}=\S\{0,1\}\)\s\(.*\)$', '\2', "")
+        let l:linevalue = substitute (getline (l:line), '^\s*\(.\{-\}\)\s*\(\S\{0,1}=\S\{0,1\}\)\s\(.*\)$', '\3', "")
 
         let l:newline = printf (l:format, l:linestart, l:linekey, l:linesep, l:linevalue)
         call setline (l:line, l:newline)

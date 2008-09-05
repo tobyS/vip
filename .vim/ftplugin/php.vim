@@ -7,27 +7,27 @@ source ~/.vim/php-doc.vim
 " {{{ Settings
 
 " Auto expand tabs to spaces
-set expandtab
+setlocal expandtab
 
 " Auto indent after a {
-set autoindent
-set smartindent
+setlocal autoindent
+setlocal smartindent
 
 " Linewidth to endless
-set textwidth=0
+setlocal textwidth=0
 
 " Do not wrap lines automatically
-set nowrap
+setlocal nowrap
 
 " Correct indentation after opening a phpdocblock and automatic * on every
 " line
-set formatoptions=qroct
+setlocal formatoptions=qroct
 
 " Use php syntax check when doing :make
-set makeprg=php-5.2\ -l\ %
+setlocal makeprg=php-5.2\ -l\ %
 
 " Use errorformat for parsing PHP error output
-set errorformat=%m\ in\ %f\ on\ line\ %l
+setlocal errorformat=%m\ in\ %f\ on\ line\ %l
 
 " Switch syntax highlighting on, if it was not
 syntax on
@@ -98,9 +98,9 @@ inoremap ' ''<LEFT>
 
 " The completion dictionary is provided by Rasmus:
 " http://lerdorf.com/funclist.txt
-set dictionary-=/home/dotxp/funclist.txt dictionary+=/home/dotxp/funclist.txt
+setlocal dictionary-=/home/dotxp/funclist.txt dictionary+=/home/dotxp/funclist.txt
 " Use the dictionary completion
-set complete-=k complete+=k
+setlocal complete-=k complete+=k
 
 " }}} Dictionary completion
 

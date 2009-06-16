@@ -58,6 +58,8 @@ set grepprg=/usr/bin/vimgrep\ $*\ /dev/null
 
 " Map <F5> to turn spelling on (VIM 7.0+)
 map <F5> :setlocal spell! spelllang=en_us<cr>
+" Map <F6> to turn spelling (de) on (VIM 7.0+)
+map <F6> :setlocal spell! spelllang=de<cr>
 
 " Highlight current line in insert mode.
 autocmd InsertLeave * se nocul
@@ -67,6 +69,9 @@ autocmd InsertEnter * se cul
 " Note: The normal command afterwards deletes an ugly pending line and moves
 " the cursor to the middle of the file.
 autocmd BufNewFile *.php 0r ~/.vim/skeleton.php | normal GddOAOA
+
+" Reads the skeleton txt file
+autocmd BufNewFile *.txt 0r ~/.vim/skeleton.txt | normal GddOAOAOAOAOAOAOAOAOA
 
 " {{{ .phps files handled like .php
 

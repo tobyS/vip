@@ -40,55 +40,55 @@ syntax on
 " noremap ; :!php5 -l %<CR>
 
 " Map ; to "add ; to the end of the line, when missing"
-noremap ; :s/\([^;]\)$/\1;/<cr>
+noremap <buffer> ; :s/\([^;]\)$/\1;/<cr>
 
 " DEPRECATED in favor of PDV documentation (see below!)
 " Map <CTRL>-P to run actual file with PHP CLI
 " noremap <C-P> :w!<CR>:!php5 %<CR>
 
 " Map <ctrl>+p to single line mode documentation (in insert and command mode)
-inoremap <C-P> :call PhpDocSingle()<CR>i
-nnoremap <C-P> :call PhpDocSingle()<CR>
+inoremap <buffer> <C-P> :call PhpDocSingle()<CR>i
+nnoremap <buffer> <C-P> :call PhpDocSingle()<CR>
 " Map <ctrl>+p to multi line mode documentation (in visual mode)
-vnoremap <C-P> :call PhpDocRange()<CR>
+vnoremap <buffer> <C-P> :call PhpDocRange()<CR>
 
 " Map <CTRL>-H to search phpm for the function name currently under the cursor (insert mode only)
-inoremap <C-H> <ESC>:!phpm <C-R>=expand("<cword>")<CR><CR>
+inoremap <buffer> <C-H> <ESC>:!phpm <C-R>=expand("<cword>")<CR><CR>
 
 " Map <CTRL>-a to alignment function
-vnoremap <C-a> :call PhpAlign()<CR>
+vnoremap <buffer> <C-a> :call PhpAlign()<CR>
 
 " Map <CTRL>-a to (un-)comment function
-vnoremap <C-c> :call PhpUnComment()<CR>
+vnoremap <buffer> <C-c> :call PhpUnComment()<CR>
 
 " }}}
 
 " {{{ Automatic close char mapping
 
 " More common in PEAR coding standard
-inoremap  { {<CR>}<C-O>O
+inoremap <buffer>  { {<CR>}<C-O>O
 " Maybe this way in other coding standards
 " inoremap  { <CR>{<CR>}<C-O>O
 
-inoremap [ []<LEFT>
+inoremap <buffer> [ []<LEFT>
 
 " Standard mapping after PEAR coding standard
-inoremap ( (  )<LEFT><LEFT>
+inoremap <buffer> ( (  )<LEFT><LEFT>
 
 " Maybe this way in other coding standards
 " inoremap ( ( )<LEFT><LEFT> 
 
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
+inoremap <buffer> " ""<LEFT>
+inoremap <buffer> ' ''<LEFT>
 
 " }}} Automatic close char mapping
 
 " {{{ Wrap visual selections with chars
 
-:vnoremap ( "zdi(<C-R>z)<ESC>
-:vnoremap { "zdi{<C-R>z}<ESC>
-:vnoremap [ "zdi[<C-R>z]<ESC>
-:vnoremap ' "zdi'<C-R>z'<ESC>
+:vnoremap <buffer> ( "zdi(<C-R>z)<ESC>
+:vnoremap <buffer> { "zdi{<C-R>z}<ESC>
+:vnoremap <buffer> [ "zdi[<C-R>z]<ESC>
+:vnoremap <buffer> ' "zdi'<C-R>z'<ESC>
 " Removed in favor of register addressing
 " :vnoremap " "zdi"<C-R>z"<ESC>
 
@@ -118,7 +118,7 @@ func! InsertTabWrapper()
 endfunction
 
 " Remap the tab key to select action with InsertTabWrapper
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <buffer> <tab> <c-r>=InsertTabWrapper()<cr>
 
 " }}} Autocompletion using the TAB key
 

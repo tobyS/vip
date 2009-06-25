@@ -45,7 +45,7 @@ inoremap  { {<CR>}<C-O>O
 inoremap [ []<LEFT>
 
 " Maybe this way in other coding standards
-inoremap ( ( )<LEFT><LEFT> 
+inoremap ( ()<LEFT> 
 
 inoremap " ""<LEFT>
 inoremap ' ''<LEFT>

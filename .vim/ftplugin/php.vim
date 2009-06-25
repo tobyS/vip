@@ -24,7 +24,7 @@ setlocal nowrap
 setlocal formatoptions=qroct
 
 " Use php syntax check when doing :make
-setlocal makeprg=php-5.2\ -l\ %
+setlocal makeprg=php\ -l\ %
 
 " Use errorformat for parsing PHP error output
 setlocal errorformat=%m\ in\ %f\ on\ line\ %l

@@ -83,6 +83,7 @@ au BufRead,BufNewFile *.phps		set filetype=php
 
 " Use filetype plugins, e.g. for PHP
 filetype plugin on
+filetype indent on
 
 " Show nice info in ruler
 set ruler

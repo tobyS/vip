@@ -51,7 +51,8 @@ hi FoldColumn term=standout ctermbg=Grey ctermfg=DarkBlue guibg=#d3d7cf guifg=#2
 hi DiffAdd term=bold ctermbg=LightBlue guibg=#204a87 guifg=#eeeeec
 hi DiffChange term=bold ctermbg=LightMagenta guibg=#e9b96e
 hi DiffDelete term=bold ctermfg=Blue ctermbg=LightCyan gui=bold guifg=#3465a4 guibg=#d3d7cf
-hi CursorLine term=underline cterm=underline guibg=#555753
+" hi CursorLine term=underline cterm=underline guibg=#555753
+hi CursorLine term=underline cterm=underline guibg=#eeeeec
 hi CursorColumn term=reverse ctermbg=grey guibg=#555753
 
 " Colors for syntax highlighting

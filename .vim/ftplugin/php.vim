@@ -4,6 +4,8 @@
 " Including PDV
 source ~/.vim/php-doc.vim
 
+let PHP_autoformatcomment = 1
+
 " {{{ Settings
 
 " Auto expand tabs to spaces

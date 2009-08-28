@@ -15,8 +15,10 @@ setlocal expandtab
 setlocal autoindent
 setlocal smartindent
 
-" Linewidth to endless
-setlocal textwidth=0
+" Linewidth to 79, because of the formatoptions this is only valid for
+" comments
+setlocal textwidth=79
+set formatoptions=qrocb
 
 " Do not wrap lines automatically
 setlocal nowrap
@@ -68,9 +70,9 @@ vnoremap <buffer> <C-c> :call PhpUnComment()<CR>
 " {{{ Automatic close char mapping
 
 " More common in PEAR coding standard
-inoremap <buffer>  { {<CR>}<C-O>O
+" inoremap <buffer>  { {<CR>}<C-O>O
 " Maybe this way in other coding standards
-" inoremap  { <CR>{<CR>}<C-O>O
+inoremap  { <CR>{<CR>}<C-O>O
 
 inoremap <buffer> [ []<LEFT>
 

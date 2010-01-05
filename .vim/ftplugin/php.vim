@@ -36,6 +36,9 @@ setlocal errorformat=%m\ in\ %f\ on\ line\ %l
 " Switch syntax highlighting on, if it was not
 syntax on
 
+" Use pman for manual pages
+setlocal keywordprg=pman
+
 " }}} Settings
 
 " {{{ Command mappings
@@ -72,7 +75,7 @@ vnoremap <buffer> <C-c> :call PhpUnComment()<CR>
 " More common in PEAR coding standard
 " inoremap <buffer>  { {<CR>}<C-O>O
 " Maybe this way in other coding standards
-inoremap  { <CR>{<CR>}<C-O>O
+inoremap  { {<CR>}<C-O>O
 
 inoremap <buffer> [ []<LEFT>
 

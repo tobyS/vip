@@ -68,7 +68,7 @@ autocmd InsertEnter * se cul
 " Reads the skeleton php file
 " Note: The normal command afterwards deletes an ugly pending line and moves
 " the cursor to the middle of the file.
-autocmd BufNewFile *.php 0r ~/.vim/skeleton.php | normal GddAA
+autocmd BufNewFile *.php 0r ~/.vim/skeleton.php | normal GddOAOAa
 
 " Reads the skeleton txt file
 autocmd BufNewFile *.txt 0r ~/.vim/skeleton.txt | normal GddOAOAOAOAOAOAOAOAOA

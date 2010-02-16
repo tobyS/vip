@@ -1,30 +1,25 @@
-===========================
-PDV - phpDocumentor for VIM
-===========================
+=============================
+VIP - VIM integration for PHP
+=============================
 
 :Author:    Tobias Schlitt
 :Revision:  $Rev: 22 $
 :Date:      $Date: 2006-11-29 22:06:50 +0100 (Wed, 29 Nov 2006) $
 :Status:    Beta
 
-This repository contains the most recent version of PDV, the phpDocumentor for
-VIM plugin. Beside that, a VIM file type plugin is provided, which configures a
-lot of VIM enhancements for more comfortable PHP editing in VIM.  Additionally,
-I provide some more files here (like my .vimrc and some minor file type
-plugins), which make my daily live with VIM more comfortable and easy.
+This repository contains the most recent version of VIP, VIM integration for
+PHP, including the phpDocumentor for VIM (PDV) script. The main component is a
+VIM file type plugin, which configures a lot of VIM enhancements for more
+comfortable PHP editing in VIM. 
+
+In addition, this repository also contains useful VIM files I found over the
+web and some self made enhancements for PHP and other languages. Copyright and
+licensing is noted in the specific files, if different than my own.
 
 .. contents::
 
-Obtaining this repository
-=========================
-
-To get the files provided in this repository, you can either download them
-manually through the web interface or do an SVN checkout using: ::
-
-    $ svn co svn://phpugdo.de/PDV
-
-PDV - The plugin itself
-=======================
+PDV - phpDocumentor for VIM
+===========================
 
 PDV provides auto documentation functionality for PHP code in VIM. You can
 easily create documentation templates for a lot of PHP code constructs easily,
@@ -52,13 +47,13 @@ Installing PDV
 
 To install PDV, you simply need to download php-doc.vim from this repository
 and put it into your local VIM directory, which should be (on Unix systems)
-located in ::
+located in::
 
     ~/.vim/
 
 Additionally, you need to source this file from your .vimrc or your VIM
 file type plugin for PHP files. To source the script, simply add the following
-line to the file of your choice: ::
+line to the file of your choice::
 
     source ~/.vim/php-doc.vim
 

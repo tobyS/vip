@@ -1,18 +1,0 @@
-SVN checkout
-============
-
-To perform a SVN checkout from this repository use ::
-	
-	$ svn co svn://svn.toby.phpugdo.de/PDV
-
-For web browsing of the repository and downloading of single files, go to
-
-	http://svn.toby.phpugdo.de/PDV/
-
-
-..
-   Local Variables:
-   mode: rst
-   fill-column: 79
-   End:
-   vim: et syn=rst tw=79

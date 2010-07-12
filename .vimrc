@@ -50,7 +50,9 @@
 "  - Added skeleton file to be read for new PHP files.
 
 " Source local settings
-source ~/.vimlocalrc
+if filereadable("~/.vimlocalrc")
+    source ~/.vimlocalrc
+endif
 
 " Set new grep command, which ignores SVN!
 " TODO: Add this to SVN

@@ -74,6 +74,7 @@ autocmd BufNewFile *.php 0r ~/.vim/skeleton.php | normal GddOAOAa
 
 " Reads the skeleton txt file
 autocmd BufNewFile *.txt 0r ~/.vim/skeleton.txt | normal GddOAOAOAOAOAOAOAOAOA
+autocmd BufNewFile *.rst 0r ~/.vim/skeleton.txt | normal GddOAOAOAOAOAOAOAOAOA
 
 " Disable phpsyntax based indenting for .php files {{{
 au BufRead,BufNewFile *.php		set indentexpr= | set smartindent

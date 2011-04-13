@@ -18,7 +18,7 @@ setlocal smartindent
 " Linewidth to 79, because of the formatoptions this is only valid for
 " comments
 setlocal textwidth=79
-set formatoptions=qrocb
+setlocal formatoptions=qrocb
 
 " Do not wrap lines automatically
 setlocal nowrap
@@ -75,12 +75,13 @@ vnoremap <buffer> <C-c> :call PhpUnComment()<CR>
 " More common in PEAR coding standard
 " inoremap <buffer>  { {<CR>}<C-O>O
 " Maybe this way in other coding standards
-inoremap  { {<CR>}<C-O>O
+inoremap <buffer>  { {<CR>}<C-O>O
 
 inoremap <buffer> [ []<LEFT>
 
 " Standard mapping after PEAR coding standard
 inoremap <buffer> ( (  )<LEFT><LEFT>
+" inoremap <buffer> ( ()<LEFT>
 
 " Maybe this way in other coding standards
 " inoremap ( ( )<LEFT><LEFT> 

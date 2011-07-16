@@ -39,6 +39,10 @@ syntax on
 " Use pman for manual pages
 setlocal keywordprg=pman
 
+" Highlight trailing whitespaces
+highlight TrailWhitespace ctermbg=red guibg=red
+match TrailWhitespace /\s\+$\| \+\ze\t/
+
 " }}} Settings
 
 " {{{ Command mappings

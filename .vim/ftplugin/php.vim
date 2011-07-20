@@ -40,8 +40,12 @@ syntax on
 setlocal keywordprg=pman
 
 " Highlight trailing whitespaces
-highlight TrailWhitespace ctermbg=red guibg=red
-match TrailWhitespace /\s\+$\| \+\ze\t/
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 " }}} Settings
 

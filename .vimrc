@@ -135,3 +135,11 @@ inoremap <silent><C-Right> <C-o>:cal search('\<\<Bar>\U\@<=\u\<Bar>\u\ze\%(\U\&\
 
 " }}}
 
+" Toggle paste with <ins>
+set pastetoggle=<ins>
+" Go to insert mode when <ins> pressed in normal mode
+nnoremap <ins> :setlocal paste!<CR>i
+" Switch paste mode off whenever insert mode is left
+autocmd InsertLeave <buffer> se nopaste
+
+" TODO: Yank last command output to certain register

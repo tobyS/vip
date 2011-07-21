@@ -141,7 +141,7 @@ inoremap <silent><C-Right> <C-o>:cal search('\<\<Bar>\U\@<=\u\<Bar>\u\ze\%(\U\&\
 " Toggle paste with <ins>
 set pastetoggle=<ins>
 " Go to insert mode when <ins> pressed in normal mode
-nnoremap <ins> :setlocal paste!<CR>i
+nnoremap <silent> <ins> :setlocal paste!<CR>i
 " Switch paste mode off whenever insert mode is left
 autocmd InsertLeave <buffer> se nopaste
 
@@ -153,5 +153,22 @@ set undodir=~/.vim/undodir
 set undofile
 set undolevels=1000 "maximum number of changes that can be undone
 set undoreload=10000 "maximum number lines to save for undo on a buffer reload
+
+" Colored column (to see line size violations)
+set colorcolumn=80
+
+" Show large "menu" with auto completion options
+set wildmenu
+set wildmode=list:longest
+
+" Write with sudo ":w!!"
+cnoremap w!! w !sudo tee % >/dev/null
+
+" inoremap <CR> <CR><Esc>:call RemoveTrailingWhitespace()<CR>i
+
+func! RemoveTrailingWhitespace()
+	let l:lastline = line(".") - 1
+	call setline(l:lastline, substitute(getline(l:lastline), ' \+$', '', ''))
+endfunc
 
 " TODO: Yank last command output to certain register

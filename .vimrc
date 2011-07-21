@@ -49,6 +49,9 @@
 "  - Added autocommand to highlight the current line in insert mode.
 "  - Added skeleton file to be read for new PHP files.
 
+" Delete all auto commands (needed to auto source .vimrc after saving)
+:autocmd!
+
 " Source local settings
 if filereadable("~/.vimlocalrc")
     source ~/.vimlocalrc
@@ -141,5 +144,14 @@ set pastetoggle=<ins>
 nnoremap <ins> :setlocal paste!<CR>i
 " Switch paste mode off whenever insert mode is left
 autocmd InsertLeave <buffer> se nopaste
+
+" Source .vimrc after saving .vimrc
+autocmd bufwritepost .vimrc source $MYVIMRC
+
+" Undo history between sessions
+set undodir=~/.vim/undodir
+set undofile
+set undolevels=1000 "maximum number of changes that can be undone
+set undoreload=10000 "maximum number lines to save for undo on a buffer reload
 
 " TODO: Yank last command output to certain register

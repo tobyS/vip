@@ -52,11 +52,6 @@
 " Delete all auto commands (needed to auto source .vimrc after saving)
 :autocmd!
 
-" Source local settings
-if filereadable("~/.vimlocalrc")
-    source ~/.vimlocalrc
-endif
-
 " Set new grep command, which ignores SVN!
 " TODO: Add this to SVN
 set grepprg=/usr/bin/vimgrep\ $*\ /dev/null
@@ -172,3 +167,8 @@ func! RemoveTrailingWhitespace()
 endfunc
 
 " TODO: Yank last command output to certain register
+
+" Source local settings -- this should always be the LAST thing to do in here!
+if filereadable($HOME . "/.vimlocalrc")
+    source ~/.vimlocalrc
+endif

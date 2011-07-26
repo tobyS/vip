@@ -348,25 +348,24 @@ func! PhpDocVar()
     let l:static = g:pdv_cfg_php4always == 1 ? matchstr(l:modifier, g:pdv_re_static) : ""
 
     let l:type = PhpDocType(l:default)
-    
-    exe "norm! " . commentline . "G$"
-    
-    " Local indent
-    let l:txtBOL = g:pdv_cfg_BOL . l:indent
+
+    let l:comment_lines = []
 	
-    exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Comment1 . l:varname . g:pdv_cfg_EOL
-    exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_EOL
+    call add(l:comment_lines, l:indent . g:pdv_cfg_CommentHead)
+	call add(l:comment_lines, l:indent . g:pdv_cfg_Comment1 . l:varname)
+    call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn)
     if l:static != ""
-        exe l:txtBOL . g:pdv_cfg_Commentn . " @static" . g:pdv_cfg_EOL
+        call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @static")
     endif
-    exe l:txtBOL . g:pdv_cfg_Commentn . " @var " . l:type . g:pdv_cfg_EOL
+    call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @var " . l:type)
     if l:scope != ""
-        exe l:txtBOL . g:pdv_cfg_Commentn . " @access " . l:scope . g:pdv_cfg_EOL
+        call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @access " . l:scope)
     endif
 	
     " Close the comment block.
-	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
+	call add(l:comment_lines, l:indent . g:pdv_cfg_CommentTail)
+
+    call append(l:commentline, l:comment_lines)
 	return l:modifier ." ". l:varname
 endfunc
 

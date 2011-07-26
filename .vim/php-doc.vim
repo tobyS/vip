@@ -378,13 +378,6 @@ func! PhpDocClass()
 
 	let l:name = substitute (getline ("."), '^\(.*\)\/\/.*$', '\1', "")
 
-    "exe g:pdv_cfg_BOL . "DEBUG:" . name. g:pdv_cfg_EOL
-
-	" First some things to make it more easy for us:
-	" tab -> space && space+ -> space
-	" let l:name = substitute (l:name, '\t', ' ', "")
-	" Orphan. We're now using \s everywhere...
-
 	" Now we have to split DECL in three parts:
 	" \[(skopemodifier\)]\(classname\)\(parameters\)
     let l:indent = matchstr(l:name, g:pdv_re_indent)
@@ -396,17 +389,14 @@ func! PhpDocClass()
 
 	let l:abstract = g:pdv_cfg_php4always == 1 ? matchstr(l:modifier, g:pdv_re_abstract) : ""
 	let l:final = g:pdv_cfg_php4always == 1 ?  matchstr(l:modifier, g:pdv_re_final) : ""
-    
-    exe "norm! " . commentline . "G$"
-    
-    " Local indent
-    let l:txtBOL = g:pdv_cfg_BOL . l:indent
+
+    let l:comment_lines = []
 	
-    exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Comment1 . l:classname . g:pdv_cfg_EOL
-    exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_EOL
+    call add(l:comment_lines, l:indent . g:pdv_cfg_CommentHead)
+	call add(l:comment_lines, l:indent . g:pdv_cfg_Comment1 . l:classname)
+    call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn)
     if l:extends != "" && l:extends != "implements"
-    	exe l:txtBOL . g:pdv_cfg_Commentn . " @uses " . l:extends . g:pdv_cfg_EOL
+    	call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @uses " . l:extends)
     endif
 
 	while (l:interfaces != ",") && (l:interfaces != "")
@@ -414,23 +404,25 @@ func! PhpDocClass()
 		let interface = substitute (l:interfaces, '\([^, ]*\) *, *\(.*\)', '\1', "")
 		" Remove this one from list
 		let l:interfaces = substitute (l:interfaces, '\([^, ]*\) *, *\(.*\)', '\2', "")
-		exe l:txtBOL . g:pdv_cfg_Commentn . " @uses " . l:interface . g:pdv_cfg_EOL
+		call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @uses " . l:interface)
 	endwhile
 
 	if l:abstract != ""
-        exe l:txtBOL . g:pdv_cfg_Commentn . " @abstract" . g:pdv_cfg_EOL
+        call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @abstract")
     endif
 	if l:final != ""
-        exe l:txtBOL . g:pdv_cfg_Commentn . " @final" . g:pdv_cfg_EOL
+        call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @final")
     endif
-	exe l:txtBOL . g:pdv_cfg_Commentn . " @package " . g:pdv_cfg_Package . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . " @version " . g:pdv_cfg_Version . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . " @copyright " . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . " @author " . g:pdv_cfg_Author g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . " @license " . g:pdv_cfg_License . g:pdv_cfg_EOL
+	call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @package " . g:pdv_cfg_Package)
+	call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @version " . g:pdv_cfg_Version)
+	call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @copyright " . g:pdv_cfg_Copyright)
+	call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @author " . g:pdv_cfg_Author)
+	call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @license " . g:pdv_cfg_License)
 
 	" Close the comment block.
-	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
+	call add(l:comment_lines, l:indent . g:pdv_cfg_CommentTail)
+
+    call append(l:commentline, l:comment_lines)
 	return l:modifier ." ". l:classname
 endfunc
 

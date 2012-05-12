@@ -207,3 +207,11 @@ func! PhpUnComment() range
 endfunc
 
 " }}}
+
+func! MakeRealFunction()
+	if (getline(line(".")) =~ 'public.*;$')
+		g/public.*;$/norm! o{}Othrow new \RuntimeException( "Not implemented, yet." );
+		g/public.*;$/s/abstract //
+		g/public.*;$/s/;$//
+	endif
+endfunc

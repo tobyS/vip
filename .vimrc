@@ -62,8 +62,8 @@ map <F5> :setlocal spell! spelllang=en_us<cr>
 map <F6> :setlocal spell! spelllang=de<cr>
 
 " Highlight current line in insert mode.
-autocmd InsertLeave * se nocul
-autocmd InsertEnter * se cul 
+autocmd InsertLeave * set nocursorline
+autocmd InsertEnter * set cursorline
 
 " Reads the skeleton php file
 " Note: The normal command afterwards deletes an ugly pending line and moves
@@ -85,10 +85,6 @@ au BufRead,BufNewFile *.phps		set filetype=php
 " }}}
 
 " {{{  Settings   
-
-" Use filetype plugins, e.g. for PHP
-filetype plugin on
-filetype indent on
 
 " Show nice info in ruler
 set ruler
@@ -155,6 +151,16 @@ set colorcolumn=80
 " Show large "menu" with auto completion options
 set wildmenu
 set wildmode=list:longest
+
+" Visual "beep" if something goes wrong
+set visualbell
+" Do not queue multple belil
+set t_vb=
+" Bigger block size for faster scrolling
+set ttyfast
+
+"set listchars=tab:▸\ ,eol:¬
+"set list " Activate display of invisibles by default
 
 " Write with sudo ":w!!"
 cnoremap w!! w !sudo tee % >/dev/null

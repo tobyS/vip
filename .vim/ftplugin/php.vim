@@ -34,9 +34,8 @@ setlocal makeprg=php\ -l\ %
 setlocal errorformat=%m\ in\ %f\ on\ line\ %l
 
 " Switch syntax highlighting on, if it was not
-if !exists("g:syntax_on")
-    syntax
-endif
+" Now enabled globally
+" syntax on
 
 " Use pman for manual pages
 setlocal keywordprg=pman

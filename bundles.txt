@@ -1,0 +1,19 @@
+=======
+Bundles
+=======
+
+- snipmate
+- supertab
+- vim-colors-solarized
+- vimtest
+- tobyS/pdv
+- tobyS/vimtip
+- tobyS/vmustache
+
+
+..
+   Local Variables:
+   mode: rst
+   fill-column: 79
+   End: 
+   vim: et syn=rst tw=79

@@ -1,0 +1,212 @@
+=======
+Concept
+=======
+
+This is a concept to be discussed for VIP version 2.0.
+
+----------
+Background
+----------
+
+VIP was created at a time, when there was nothing like package management in
+VIM and where most people in the PHP world were happy to just grab something
+which almost suited their needs and then put a few tweaks on it. Therefore,
+VIP 1 is tightly integrated, including such features as PDV.
+
+This situation has changed by now: VIM scripts are now managed by package
+systems like Pathogen__ and Vundle__. In addition VIP has grown so much, that
+there is lots of stuff which people may need or not. It also requires quite
+some external packages to work fully.
+
+------------
+Requirements
+------------
+
+The goal is, to let VIP become a basis for PHP developers using VIM, which
+allows them to easily setup their custom (or not so custom) VIM setup. This VIM
+setup should be
+
+a) fully customizable, while customizations should be persistable in version
+   controll systems (prefreably on Github)
+b) fully updateable, so that people maintaining their custom setups can still
+   easily pull latest changes and integrate them, if they like
+
+Elements
+========
+
+VIP currently consists of the following elements, which are desired to be
+handled in the future, too:
+
+- plugins (or bundles)
+- settings (global and filetype)
+- local adjustment features
+
+None of these elements must be handled by VIP directly, but it is desired to
+have other, established VIM tools handle as many as possible.
+
+System
+======
+
+VIP is, at a first step, only required to work on \*nix systems (i.e. Linux,
+Unix and Mac). If anyone really wants to use it on Windows without Cygwin, it
+would be her/his duty to contribute according adjustments.
+
+-----
+Ideas
+-----
+
+The idea is, to make VIP a starting platform for all PHP developers using VIM,
+which does provide
+
+- commonly used plugins (bundles) AOTB
+- settings and setting snippets for PHP editing
+- mechanisms to update these
+- a simple interface to enable/disable these components
+- possibilities to persist such settings to
+  a) use them on different machines
+  b) have a back up
+- easy integration with custom additions
+
+To achieve this, the following ideas are to be discussed.
+
+Bundle handling
+===============
+
+Handling of bundles (aka plugins) is nowadays done with Pathogen, which allows
+to install them each in a dedicated directory, easing maintanance of the local
+.vim directory. However, Pathogen does not take care for installing and
+updating such bundles. This is where Vundle comes into play, which does
+basically the same as Pathogen, but also provides install/update features for
+bundles located on Github, vim-scripts.org or other Git repos.
+
+For this reasons, Vundle should be the basis of VIP.
+
+However, since VIP should ship with a sensible default of bundles, which should
+be customizable, there is a little bit scripting needed on top. The basic idea
+is to maintain a central config file in VIP, which lists the default bundles.
+However, this file is not used directly to source bundles, but deals as the
+basis for a custom config, i.e.
+
+- bundles.dist.conf         (central bundle config)
+- bundles.conf              (local bundle config)
+
+As can be seen, we don't use VIM scripts directly for these config files, for 3
+reasons:
+
+1. Keep info about newly added and removed bundles in the central file
+2. Keep info about customly added bundles in the local file
+3. Allow a script to maintain this information for the user
+
+Latter named script can be used by the user to
+
+- Install new bundles available from the central config
+  - Graduately
+- Remove bundles no more available in the central config
+  - Graduadely
+- Add custom bundles to the local config
+
+It is desired, that this script automatically executes Vundle on such updates
+for the ease of use.
+
+The script may, for a first throw, be a simple bash script, in order to get
+something done soon. However, it might be desired to migrate this to a VIM
+script later on, not sure …
+
+In the central .vimrc provided by VIP, the local config is then read and
+transformed into Vundle calls. Of course, this requires Vundle to be
+externalled into VIP. Maybe, it makes sense to put the functionality provided
+here into a dedicated bundle, too?
+
+Open issues
+-----------
+
+- Config file format
+  - Added bundles (central)
+  - Removed bundles (central)
+  - Custom bundles (local)
+- Script
+  - Exact commands
+- Sourcing
+  - Source .dist. file, if no local present?
+  - Would ease use
+- Outsource concept into own tool?
+
+Config handling
+===============
+
+VIP should basically support 2 scopes of config:
+
+- Globals (which every user needs, might include sensible defaults)
+- Locals (local adjustments to global configs and custom config)
+
+on 2 different areas:
+
+- Global (.vimrc)
+- Filetypes (ftplugin)
+
+Filetypes
+---------
+
+Jakob has implemented a quite nice system for FT config: He has tiny snippets
+of config with a speaking name in a central folder (ftplugin/modules) and links
+these to the specific filetype dirs, where he wants them to be active. For
+example, ``auto_closechar_parenthesis.vim`` which is basically used in all
+filetypes. This concept should be taken over by VIP.
+
+However, VIP basically needs to provide 2 module dirs: A central one for
+snippets shipped with VIP and a local one.
+
+A small script to activate, deactivate and list snippets is desired. Maybe, we
+should even introduce a simple markup to give docs for a snippet.
+
+I currently imagine to have that stuff work like::
+
+    $ vcsnip list
+      list all (global and local snippets)
+    $ vcsnip list php
+      list snippets installed for php
+    $ vcsnip add fancy-snippet php
+      add fancy-snippet to the php filetype
+    $ vcsnip remove fancy-snippet php
+      remove fancy-snippet from the php filetype
+    $ vcsnip clone php js
+      clone the php config to a new js config
+
+Global
+------
+
+The global config is somewhat harder. A central .vimrc, which handles all the
+magic to realize VIP is of course needed. In addition to that, it would make
+sense to provide some really sensible defaults there, which everyone wants. But
+most stuff is highly user specific.
+
+The idea should therefore be, to find a sensible config templates, which users
+can pick and adjust to their needs, while still maintaining updates.
+
+Maybe it is sensible to use the same mechanism as for filetypes here and let
+the user pick global bundles?
+
+Open issues
+-----------
+
+- Filetype
+  - Which convention for local snippet folder?
+- Global
+  - Global bundles?
+
+Integration
+===========
+
+VIP should provide the framework for centrally handling the stuff described
+above, while allowing its users to persist their custom adjustments. In
+addition, installation should be kept easy and simple. I've no real idea, yet,
+how this should work …
+
+
+
+..
+   Local Variables:
+   mode: rst
+   fill-column: 79
+   End: 
+   vim: et syn=rst tw=79

@@ -52,6 +52,12 @@
 " Delete all auto commands (needed to auto source .vimrc after saving)
 autocmd!
 
+" Load and initialize Pathogen bundle management
+" Disabling filetype detection first is needed on some linux distros.
+" see http://www.adamlowe.me/2009/12/vim-destroys-all-other-rails-editors.html
+filetype off 
+call pathogen#infect('bundles')
+filetype plugin indent on
 " Set new grep command, which ignores SVN!
 " TODO: Add this to SVN
 set grepprg=/usr/bin/vimgrep\ $*\ /dev/null

@@ -206,11 +206,54 @@ func! PhpUnComment() range
 endfunc
 
 " }}}
+"
+let s:old_cpo = &cpo
+set cpo&vim
 
 func! MakeRealFunction()
-	if (getline(line(".")) =~ 'public.*;$')
-		g/public.*;$/norm! o{}Othrow new \RuntimeException( "Not implemented, yet." );
-		g/public.*;$/s/abstract //
-		g/public.*;$/s/;$//
+	if (getline(line(".")) =~ 'public.*;$' || getline(line(".")) =~ 'abstract.*;$')
+ 		g/function.*;$/norm! o{}Othrow new \RuntimeException( "Not implemented, yet." );
+ 		g/function.*;$/s/abstract //
+ 		g/function.*;$/s/;$//
 	endif
 endfunc
+
+func! FoldCalls(regex) range
+	let l:lastLine = a:lastline
+	let l:firstLine = a:firstline
+
+	let l:currentSpaceCount = -1
+
+	let l:startTime = localtime()
+
+	let l:currentLine = l:firstLine
+	while l:currentLine <= l:lastLine
+		let l:lineText = getline(l:currentLine)
+		"    1.6975   24568256		    -> str_replace(string(1), string(2), string(25)) /h
+		let l:matches = matchlist(l:lineText, '\S\(\s\+\)-> \(.*\)$')
+		if  len(l:matches) > 0
+			let l:whiteSpaceCount = strlen(l:matches[1])
+
+			" Continue fold regex matches again
+			if l:whiteSpaceCount <= l:currentSpaceCount && match(l:matches[2], a:regex) == -1
+				call append(l:currentLine - 1, "}}}")
+				let l:currentLine += 1
+				let l:lastLine += 1
+				let l:currentSpaceCount = -1
+			endif
+
+			if l:currentSpaceCount == -1 && match(l:matches[2], a:regex) > -1
+				call append(l:currentLine - 1, "{{{ " . l:matches[2])
+				let l:currentLine += 1
+				let l:lastLine += 1
+				let l:currentSpaceCount = l:whiteSpaceCount
+			endif
+		endif
+		let l:currentLine += 1
+	endwhile
+
+	let l:elapsedTime = localtime() - l:startTime
+	echomsg "Elapsed: " . l:elapsedTime
+endfunc
+
+let &cpo = s:old_cpo

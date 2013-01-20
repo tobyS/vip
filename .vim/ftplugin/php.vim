@@ -89,8 +89,8 @@ inoremap <buffer>  { {<CR>}<C-O>O
 inoremap <buffer> [ []<LEFT>
 
 " Standard mapping after PEAR coding standard
-inoremap <buffer> ( (  )<LEFT><LEFT>
-" inoremap <buffer> ( ()<LEFT>
+"inoremap <buffer> ( (  )<LEFT><LEFT>
+inoremap <buffer> ( ()<LEFT>
 
 " Maybe this way in other coding standards
 " inoremap ( ( )<LEFT><LEFT> 
@@ -125,17 +125,17 @@ setlocal complete-=k complete+=k
 
 " This function determines, wether we are on the start of the line text (then tab indents) or
 " if we want to try autocompletion
-func! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
+" func! InsertTabWrapper()
+"     let col = col('.') - 1
+"     if !col || getline('.')[col - 1] !~ '\k'
+"         return "\<tab>"
+"     else
+"         return "\<c-p>"
+"     endif
+" endfunction
 
 " Remap the tab key to select action with InsertTabWrapper
-inoremap <buffer> <tab> <c-r>=InsertTabWrapper()<cr>
+" inoremap <buffer> <tab> <c-r>=InsertTabWrapper()<cr>
 
 " }}} Autocompletion using the TAB key
 

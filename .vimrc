@@ -58,6 +58,12 @@ autocmd!
 filetype off 
 call pathogen#infect('bundles')
 filetype plugin indent on
+
+" Color settings
+set t_Co=256
+let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
+set background=light
+colorscheme solarized
 " Set new grep command, which ignores SVN!
 " TODO: Add this to SVN
 set grepprg=/usr/bin/vimgrep\ $*\ /dev/null

@@ -1,0 +1,54 @@
+snippet cls
+	namespace ${1:`substitute(substitute(substitute(expand("%:p"), '\v(.*\/\l+)((\/\u\w+)+)\/\u\w+.php$', '\2', ''), '\/', '\\\', 'g'), '^\\\', '', '')`};
+	
+	class ${2:`Filename('', 'myClass')`}
+	{
+	    ${3}
+	}
+snippet wh
+	while (${1:/* condition */})
+	{
+		${2:// code...}
+	}
+snippet if
+	if (${1:/* condition */})
+	{
+		${2:// code...}
+	}
+snippet if
+	if (${1:/* condition */})
+	{
+		${2:// code...}
+	} else {
+		${3:// code...}
+	}
+	${4}
+# Tertiary conditional
+snippet t
+	$${1:retVal} = (${2:condition}) ? ${3:a} : ${4:b};${5}
+snippet switch
+	switch ($${1:variable})
+	{
+		case '${2:value}':
+			${3:// code...}
+			break;
+		${5}
+		default:
+			${4:// code...}
+			break;
+	}
+snippet for
+	for ($${2:i} = 0; $$2 < ${1:count}; $$2${3:++})
+	{
+		${4: // code...}
+	}
+snippet fe
+	foreach ($${1:variable} as $${2:key})
+	{
+		${3:// code...}
+	}
+snippet fn
+	${1:public }function ${2:FunctionName}(${3})
+	{
+		${4:// code...}
+	}

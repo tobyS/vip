@@ -158,6 +158,20 @@ autocmd bufwritepost .vimrc source $MYVIMRC
 autocmd BufRead *.twig set filetype=twig
 autocmd BufRead *.html.twig set filetype=htmltwig
 
+" VIMTips
+let g:vimtip_tips = []
+call add(g:vimtip_tips, "Register <*> is middle mouse clipboard")
+call add(g:vimtip_tips, "Search in pman: <SHIFT>+<k>")
+call add(g:vimtip_tips, "Jump to matching brace: <%>")
+call add(g:vimtip_tips, "Re-indent code: <=>")
+call add(g:vimtip_tips, "Indent inner / outer block: >iB / >aB")
+call add(g:vimtip_tips, "Snip complete: cls, if, fn, fe, fi")
+call add(g:vimtip_tips, "\\c in Such-Regex = case-insensitive")
+call add(g:vimtip_tips, ":r <file> paste the given file at the current position")
+
+autocmd VimEnter * call vimtip#NextTip()
+autocmd WinEnter * call vimtip#NextTip()
+
 " Undo history between sessions
 set undodir=~/.vim/undodir
 set undofile

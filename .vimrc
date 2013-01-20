@@ -50,7 +50,7 @@
 "  - Added skeleton file to be read for new PHP files.
 
 " Delete all auto commands (needed to auto source .vimrc after saving)
-:autocmd!
+autocmd!
 
 " Set new grep command, which ignores SVN!
 " TODO: Add this to SVN

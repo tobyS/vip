@@ -154,6 +154,10 @@ autocmd InsertLeave <buffer> se nopaste
 " Source .vimrc after saving .vimrc
 autocmd bufwritepost .vimrc source $MYVIMRC
 
+" Twig template highlighting
+autocmd BufRead *.twig set filetype=twig
+autocmd BufRead *.html.twig set filetype=htmltwig
+
 " Undo history between sessions
 set undodir=~/.vim/undodir
 set undofile

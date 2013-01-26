@@ -7,6 +7,9 @@ Instead, setup your own VIM setup. If you need inspiration you find `my current
 VIM setup on Github`__. Beside that, there is a new version of `PDV -
 phpDocumentor for VIM`__, which generates doc blocks for you.
 
+__ https://github.com/tobyS/vip
+__ https://github.com/tobyS/pdv
+
 
 ..
    Local Variables:
